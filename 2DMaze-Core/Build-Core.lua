@@ -1,4 +1,4 @@
-project "Core"
+project "2DMaze-Core"
    kind "StaticLib"
    language "C++"
    cppdialect "C++20"

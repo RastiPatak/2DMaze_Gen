@@ -1,4 +1,4 @@
-project "App"
+project "2DMaze-App"
    kind "ConsoleApp"
    language "C++"
    cppdialect "C++20"
@@ -12,12 +12,12 @@ project "App"
       "Source",
 
 	  -- Include Core
-	  "../Core/Source"
+	  "../2DMaze-Core/Source"
    }
 
    links
    {
-      "Core"
+      "2DMaze-Core"
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
