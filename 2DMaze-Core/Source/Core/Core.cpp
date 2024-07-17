@@ -1,7 +1,5 @@
 #include "Core.h"
 
-#include <iostream>
-
 namespace Core {
 
 	int mazeWidth;
@@ -31,24 +29,24 @@ namespace Core {
 		int width = Core::mazeWidth;
 		int height = Core::mazeHeight;
 
-		char* output = new char[((width + 1) * height) + 1]();
+		std::vector<char> output;
 		for (int i = 0; i < height; i++)
 		{
 			for (int j = 0; j < (width + 1); j++)
 			{
 				if (j == width)
-					output[(i * (width + 1)) + j] = '\n';
+					output.push_back('\n');
 				else if (j == width - 1 && i == height - 1)
-					output[(i * (width + 1)) + j] = '#';
+					output.push_back('#');
 				else if (j == width - 1)
-					output[(i * (width + 1)) + j] = 'v';
+					output.push_back('v');
 				else
-					output[(i * (width + 1)) + j] = '>';
+					output.push_back('>');
 			}
 		}
 		xPositionOrigin = width - 1;
 		yPositionOrigin = height - 1;
-		return std::string(output);
+		return std::string(output.begin(), output.end());
 	}
 
 	std::string IterateMaze(std::string mazeString)
@@ -120,6 +118,33 @@ namespace Core {
 		Position result = Position(xPosition, yPosition);
 		result.direction = direction;
 		return result;
+	}
+
+	void CalcEndpoints(std::string& mazeString)
+	{
+		std::vector<int> endOfLines = GetEndOfLines(mazeString);
+		for (int i = 0; i < endOfLines.size(); i++)
+		{
+			std::string secondPart = mazeString.substr(endOfLines[i]);
+			mazeString.erase(endOfLines[i], mazeString.find_last_of('\n'));
+			mazeString.append(" - ");
+			mazeString.append(mazeWidth, 'X');
+			mazeString.append(secondPart);
+			endOfLines = GetEndOfLines(mazeString);
+			std::cout << endOfLines[i] << ", ";
+		}
+		std::cout << std::endl;
+	}
+
+	std::vector<int> GetEndOfLines(std::string mazeString)
+	{
+		std::vector<int> positions;
+		for (int i = 0; i < mazeString.size(); ++i)
+		{
+			if (mazeString[i] == '\n')
+				positions.push_back(i);
+		}
+		return positions;
 	}
 }
 

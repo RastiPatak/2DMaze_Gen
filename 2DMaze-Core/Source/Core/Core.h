@@ -2,6 +2,7 @@
 
 #include <string>
 #include <random>
+#include <iostream>
 
 struct Position
 {
@@ -25,4 +26,7 @@ namespace Core {
 	std::string GenStartingMaze();
 	std::string IterateMaze(std::string mazeString);
 	Position MoveOrigin();
+
+	void CalcEndpoints(std::string& mazeString);
+	std::vector<int> GetEndOfLines(std::string mazeString);
 }
